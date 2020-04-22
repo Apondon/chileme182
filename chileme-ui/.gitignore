@@ -1,7 +1,8 @@
 .DS_Store
 node_modules
 /dist
-
+src/assets/style/iconfont/demo_index.html
+src/assets/style/iconfont/demo.css
 # local env files
 .env.local
 .env.*.local

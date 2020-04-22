@@ -5,6 +5,7 @@ import store from './store'
 import Axios from 'axios' // 引入axios
 import ElementUI from 'element-ui' // 引入elementui
 import 'element-ui/lib/theme-chalk/index.css'
+import './assets/style/style.css' //引入全局样式
 Vue.config.productionTip = false
 
 Vue.prototype.Axios = Axios   // 配置axios
