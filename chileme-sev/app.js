@@ -1,12 +1,12 @@
 const Koa = require('koa')
 const app = new Koa()
 
-const KoaBody = require('koa-body')
+const KoaBody = require('koa-body') //解析post请求
 
 app.use(async ctx=>{
     ctx.body = 'hellooooooooooo'
 })
-app.use(KoaBody())
+app.use(KoaBody()) // 配置koa-body
 
 // const Router = require('koa-router')
 // const router = new Router()

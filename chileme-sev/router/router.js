@@ -1,3 +1,8 @@
+// 1.引入koa-router 及 controller中定义好的中间件
+// 2.对koa-router 进行实例化
+// 3.定义接口
+// 4.暴露接口
+
 // 接口
 
 
