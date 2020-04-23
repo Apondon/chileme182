@@ -14,7 +14,7 @@
                 el-form-item
                     el-button(type="primary" @click="registerHandle('Form')") 立即注册
                     el-button(@click="resetHandle('Form')") 重置
-            el-link(@click='jumpLogin') 默认链接   
+            el-link(@click='jumpLogin') 点击登录   
 </template>
 <script>
 export default {
@@ -64,8 +64,7 @@ export default {
         },
         // 立即登录
         jumpLogin(){
-            alert('跳转登录页')
-            // this.$router.push()
+            this.$router.push('/login')
         }
     }
 }
