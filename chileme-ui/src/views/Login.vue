@@ -1,4 +1,5 @@
 <template lang="pug">
+    //- goods 分支 
     div.login
         div.loginBox
             div.icon.el-icon-food 
