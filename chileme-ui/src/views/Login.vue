@@ -24,7 +24,19 @@ export default {
     },
     methods:{
         loginHandle(){
-            alert('登录')
+            this.Axios({ 
+                method: 'post',
+                url: '/api/user/login',
+                data: {
+                    firstName: 'Fred',
+                    lastName: 'Flintstone'
+                }
+            }).then(data =>{
+                console.log(data)
+            }).catch(err => {
+                console.log(err)
+            })
+           
         },
         resetHandle(formName){
             this.$refs[formName].resetFields()

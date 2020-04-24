@@ -5,5 +5,8 @@ module.exports = {
           .use('pug-html-loader')
           .loader('pug-html-loader')
           .end()
-    }
+    },
+    devServer: {
+		proxy:"http://localhost:3000"
+	}
 }
