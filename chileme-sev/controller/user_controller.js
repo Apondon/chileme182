@@ -25,7 +25,7 @@ const register = async ctx => {
             type:'format error',
             msg:'账号格式为4到16位（字母，数字，下划线，减号）'
         }
-        return
+        return  //中断后续代码的执行
     }
     // 验证密码是否合法
     if( !Util.regPassword.test(data.password) ){ // 若验证不通过
@@ -48,13 +48,56 @@ const register = async ctx => {
         return
     }
     // 将本条数据插入数据库
-    // 2.注册成功
-    ctx.body = {
-        code:200,
-        flag: true,
-        type:'success',
-        msg:'注册成功'
+    // >1.判断手机号是否被注册过
+    let res = await User.find({mobile:data.mobile})
+    console.log(res)
+    if(res.length){
+        ctx.body = {
+            code:200,
+            flag: true,
+            type:'be registered',
+            msg:'该手机号已注册'
+        }
+        return
     }
+    // >2.判断账号是否重复
+    console.log(res)
+    if(res.length){
+        ctx.body = {
+            code:200,
+            flag: true,
+            type:'be registered',
+            msg:'该账号号已注册'
+        }
+        return
+    }
+    // 先实例化表结构并 生成数据
+    let user = new User({
+        username: data.username,
+        password: data.password,
+        mobile: data.mobile,
+        createDate: new Date().getTime(),
+        lastUpdate: new Date().getTime()
+    }) 
+    // 将数据插入数据库
+    await user.save().then(data => {
+        // 2.注册成功
+        ctx.body = {
+            code:200,
+            flag: true,
+            type:'success',
+            msg:'注册成功'
+        }
+    }).catch(err => {
+        console.log(err)
+        ctx.body = {
+            code:200,
+            flag: true,
+            type:'error',
+            msg:'注册失败'
+        }
+    })
+    
 }
 /*
 const register = async (ctx) => {}
@@ -65,8 +108,32 @@ async function register(ctx){}
 const login = async ctx => {
     let data = ctx.request.body
     // 1.验证登录信息是否合法  能否再库中查到该账号，账号信息和密码是否匹配
-    // 2.登录成功
-    ctx.body = 'login!'
+    let res = await User.findOne({username:data.username})
+    console.log(res) // 若查不到数据返回null
+    if(!!res){ //若该数据存在
+        if(data.password == res.password){ // 登录成功
+            ctx.body = {
+                code:200,
+                flag: true,
+                type:'success',
+                msg:'登录成功'
+            }
+        }else{ // 登陆失败
+            ctx.body = {
+                code:200,
+                flag: false,
+                type:'error',
+                msg:'登录密码错误'
+            }
+        }
+    }else{
+        ctx.body = {
+            code:200,
+            flag: false,
+            type:'not exist',
+            msg:'未找到账号请先注册'
+        }
+    }  
 }
 
 // 3.暴露中间件
