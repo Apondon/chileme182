@@ -9,7 +9,7 @@
                 div.menuBtn
                    span.iconfont &#xe53d;
                    i 会员  
-                div.menuBtn
+                div.menuBtn(@click="jumpTo('/stockManagement')")
                    span.iconfont &#xe65d;
                    i 库存
                 div.menuBtn
@@ -26,6 +26,7 @@
                    i 退出                
           el-col(:span='23')
               div.gridrt
+                  router-view
 </template>
 
 <script>
@@ -43,6 +44,11 @@ export default {
         {id:6,icon:'&#xe65e;',name:'辅助',link:''},
         {id:7,icon:'&#xe602;',name:'退出',link:''},
       ]
+    }
+  },
+  methods:{
+    jumpTo(path){
+      this.$router.push(path)
     }
   }
   
