@@ -1,5 +1,6 @@
 // 1.引入model文件夹中定义好的Schema
 const User = require('../model/user_schema')
+const Util = require('../utils/util') //引入工具文件
 // 2.构造中间件
 
 /* async/await 
@@ -11,14 +12,49 @@ const User = require('../model/user_schema')
     }
 
 */ 
-
-
 // 注册
 const register = async ctx => {
     let data = ctx.request.body
+    console.log(data)
     // 1.验证数据是否合法    账号，密码，手机号（格式/手机号唯一性）
+    // 验证账号是否合法
+    if( !Util.regUsername.test(data.username) ){ // 若验证不通过
+        ctx.body = {
+            code:200,
+            flag: false,
+            type:'format error',
+            msg:'账号格式为4到16位（字母，数字，下划线，减号）'
+        }
+        return
+    }
+    // 验证密码是否合法
+    if( !Util.regPassword.test(data.password) ){ // 若验证不通过
+        ctx.body = {
+            code:200,
+            flag: false,
+            type:'format error',
+            msg:'密码格式6到12位 （字母和数字的组合）'
+        }
+        return
+    }
+    // 验证手机号是否合法
+    if( !Util.regMobile.test(data.mobile) ){ // 若验证不通过
+        ctx.body = {
+            code:200,
+            flag: false,
+            type:'format error',
+            msg:'手机号格式错误'
+        }
+        return
+    }
+    // 将本条数据插入数据库
     // 2.注册成功
-    ctx.body = 'register!'
+    ctx.body = {
+        code:200,
+        flag: true,
+        type:'success',
+        msg:'注册成功'
+    }
 }
 /*
 const register = async (ctx) => {}
