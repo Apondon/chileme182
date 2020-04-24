@@ -26,10 +26,11 @@ export default {
         loginHandle(){
             this.Axios({ 
                 method: 'post',
-                url: '/api/user/login',
+                url: '/api/user/register',
                 data: {
-                    firstName: 'Fred',
-                    lastName: 'Flintstone'
+                    username: 'Fr12',
+                    password:'111wwww',
+                    mobile:13324567777
                 }
             }).then(data =>{
                 console.log(data)
