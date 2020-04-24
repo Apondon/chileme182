@@ -51,7 +51,44 @@ export default {
         registerHandle(formName){
             this.$refs[formName].validate((valid) => {
                 if (valid) {
-                    alert('注册成功!')
+                    if(this.form.password !== this.form.cfm){ //两次密码输入不一致
+                        // this.$message.error('两次密码输入不一致')
+                        this.$message({
+                            showClose: true,
+                            message: '两次密码输入不一致',
+                            type: 'error'
+                        });
+                        return false
+                    }
+                    this.Axios({ 
+                        method: 'post',
+                        url: '/api/user/register',
+                        data: {
+                            username: this.form.username,
+                            password:this.form.password,
+                            mobile:this.form.moblie
+                        }
+                    }).then(data =>{
+                        console.log(data)
+                        // 若成功
+                        if(data.data.flag) { //注册成功
+                            this.$router.push('/login')
+                        }else{ //注册失败
+                            // this.$message.error(data.data.msg)
+                            this.$message({
+                                showClose: true,
+                                message: data.data.msg,
+                                type: 'error'
+                            });
+                        }
+                    }).catch(err => {
+                        // this.$message.error(`注册失败请稍后再试`)
+                        this.$message({
+                            showClose: true,
+                            message: `注册失败请稍后再试`,
+                            type: 'error'
+                        });
+                    })
                 } else {
                     console.log('注册失败!!')
                     return false

@@ -24,29 +24,46 @@ export default {
     },
     methods:{
         loginHandle(){
-            // this.Axios({ 
-            //     method: 'post',
-            //     url: '/api/user/register',
-            //     data: {
-            //         username: 'test1',
-            //         password:'psd123456',
-            //         mobile:13324567777
-            //     }
-            // }).then(data =>{
-            //     console.log(data)
-            // }).catch(err => {
-            //     console.log(err)
-            // })
+            if(!this.form.username){
+                this.$notify({
+                    title: '提示',
+                    message: '请输入正确的用户名',
+                    duration: 0
+                });
+                return false
+            }
+            if(!this.form.password||this.form.password.length<6||this.form.password.length>20){
+                this.$notify({
+                    title: '提示',
+                    message: '请输入正确的密码',
+                    duration: 0
+                });
+                return false
+            }
             this.Axios({ 
                 method: 'post',
                 url: '/api/user/login',
                 data: {
-                    username: 'test1',
-                    password:'psd123456',
+                    username: this.form.username,
+                    password: this.form.password,
                 }
             }).then(data =>{
                 console.log(data)
+                if(data.data.flag){ //登陆成功
+                    this.$router.push('/')
+                }else{ // 登陆失败
+                    this.$notify({
+                        title: '提示',
+                        message: data.data.msg,
+                        duration: 0
+                    });
+                }
             }).catch(err => {
+                 this.$notify({
+                    title: '提示',
+                    message: '登录失败请稍后再试',
+                    duration: 0
+                });
                 console.log(err)
             })
            
@@ -67,6 +84,7 @@ export default {
     display:flex;
     justify-content: center;
     align-items: center;
+    
     .loginBox{
         width:800px;
         height: 450px;
@@ -84,5 +102,8 @@ export default {
             margin:30px auto 10px;
         }
     }
+}
+.el-notification__title{
+    text-align: left;
 }
 </style>

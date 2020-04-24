@@ -54,18 +54,17 @@ const register = async ctx => {
     if(res.length){
         ctx.body = {
             code:200,
-            flag: true,
+            flag: false,
             type:'be registered',
             msg:'该手机号已注册'
         }
         return
     }
     // >2.判断账号是否重复
-    console.log(res)
     if(res.length){
         ctx.body = {
             code:200,
-            flag: true,
+            flag: false,
             type:'be registered',
             msg:'该账号号已注册'
         }
@@ -92,7 +91,7 @@ const register = async ctx => {
         console.log(err)
         ctx.body = {
             code:200,
-            flag: true,
+            flag: false,
             type:'error',
             msg:'注册失败'
         }
