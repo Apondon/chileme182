@@ -12,28 +12,42 @@
                             el-input(v-model="form.num") 
                         el-form-item(label="商品描述")
                             el-input(v-model="form.desc")
-                        el-form-item(label="推荐指数")
+                        el-form-item(label="推荐指数(3-5)")
                             el-input(v-model="form.recommend")
-                        el-form-item(label="是否是饮料类")
-                            el-input(v-model="form.isDrink")   
+                        el-form-item(label="是否是饮料类") 
+                            el-radio(v-model="form.isDrink", label="true") 是
+                            el-radio(v-model="form.isDrink", label="false") 否
                         el-form-item(label="是否是套餐")
-                            el-input(v-model="form.isCombo")   
+                            el-radio(v-model="form.isCombo", label="true") 是
+                            el-radio(v-model="form.isCombo", label="false") 否 
                         el-form-item(label="商品类型")
-                            el-input(v-model="form.type") 
+                            el-radio(v-model="form.type", label="hot") 拿手菜
+                            el-radio(v-model="form.type", label="cool") 下酒菜
+                            el-radio(v-model="form.type", label="soup") 汤羹
+                            el-radio(v-model="form.type", label="staple") 主食
+                            el-radio(v-model="form.type", label="quick") 方便食品
                         el-form-item(label="是否是推荐菜")
-                            el-input(v-model="form.isRecommend")
+                            el-radio(v-model="form.isRecommend", label="true") 是
+                            el-radio(v-model="form.isRecommend", label="false") 否 
                         el-form-item(label="商品销售数量")
                             el-input(v-model="form.sailNum") 
                         el-form-item(label="是否打折")
-                            el-input(v-model="form.isOff")    
+                            el-radio(v-model="form.isOff", label="true") 是
+                            el-radio(v-model="form.isOff", label="false") 否   
                         el-form-item(label="折扣幅度")
                             el-input(v-model="form.percent")    
                         el-form-item(label="主要材料")
-                            el-input(v-model="form.material")
+                            el-checkbox-group(v-model="form.material")
+                                el-checkbox(label="时蔬")
+                                el-checkbox(label="鸡肉")
+                                el-checkbox(label="猪肉")
+                                el-checkbox(label="羊肉")
                         el-form-item(label="口味")
-                            el-input(v-model="form.tast")                                 
+                            el-radio(v-model="form.tast", label="sweet") 甜
+                            el-radio(v-model="form.tast", label="hot") 辣
+                            el-radio(v-model="form.tast", label="light") 清淡                                
                         el-form-item 
-                            el-button 添加
+                            el-button(@click='addHandle') 添加
                             el-button 重置  
             el-col(:span='12')
                 div.rightTable
@@ -71,7 +85,7 @@ export default {
                 sailNum:'',
                 isOff:'',
                 percent:'',
-                material:'',
+                material:[],
                 tast:'',
             },
             tableData:[
@@ -106,7 +120,24 @@ export default {
         }
     },
     methods:{
-
+        addHandle(){
+            console.log(`
+            goodname      商品名           ${this.form.goodname}
+            price         商品单价         ${this.form.price}  
+            num           商品库存数量     ${this.form.num}
+            desc          商品描述         ${this.form.desc}
+            recommend     推荐指数         ${this.form.recommend}
+            isDrink       是否是饮料类     ${this.form.isDrink}
+            isCombo       是否是套餐       ${this.form.isCombo}
+            type          商品类型         ${this.form.type} 
+            isRecommend   是否是推荐菜     ${this.form.isRecommend} 
+            sailNum       商品销售数量     ${this.form.sailNum}
+            isOff         是否打折         ${this.form.isOff}
+            percent       折扣幅度         ${this.form.percent}
+            material      主要材料         ${this.form.material}       
+            tast          口味             ${this.form.tast}        
+            `)
+        }
     }
 }
 </script>
@@ -125,6 +156,10 @@ export default {
         }
         .leftForm{
             background: lightskyblue;
+            .el-form{
+                width:60%;
+                margin:auto;
+            }
         }
         .rightTable{
             background: yellow;
