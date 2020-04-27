@@ -3,7 +3,7 @@
         el-row
             el-col(:span='12')
                 div.leftForm
-                    el-form(ref="form",:model="form",label-width="120px")
+                    el-form(ref="Form",:model="form",label-width="120px")
                         el-form-item(label="商品名")
                             el-input(v-model="form.goodname")
                         el-form-item(label="商品单价")
@@ -48,7 +48,7 @@
                             el-radio(v-model="form.tast", label="light") 清淡                                
                         el-form-item 
                             el-button(@click='addHandle') 添加
-                            el-button 重置  
+                            el-button(@click='resetHandle') 重置  
             el-col(:span='12')
                 div.rightTable
                     el-table(:data="tableData",border,style="width: 100%",max-height="800")
@@ -56,14 +56,34 @@
                         el-table-column(prop="goodname",label="商品名",width="120")
                         el-table-column(prop="price",label="商品单价",width="60")
                         el-table-column(prop="num",label="商品库存数量",width="60")
-                        el-table-column(prop="desc",label="商品描述")
+                        el-table-column(prop="desc",label="商品描述",width="120")
                         el-table-column(prop="recommend",label="推荐指数")
                         el-table-column(prop="isDrink",label="是否是饮料类")
+                            template(slot-scope="scope")
+                                el-tag(
+                                    :type="scope.row.isDrink === true ? 'success' : 'danger'",
+                                    disable-transitions
+                                    ) {{scope.row.isDrink === true? '是':'否'}}
                         el-table-column(prop="isCombo",label="是否是套餐")
+                            template(slot-scope="scope")
+                                el-tag(
+                                    :type="scope.row.isCombo === true ? 'success' : 'danger'",
+                                    disable-transitions
+                                    ) {{scope.row.isCombo === true? '是':'否'}}
                         el-table-column(prop="type",label="商品类型")
                         el-table-column(prop="isRecommend",label="是否是推荐菜")
+                            template(slot-scope="scope")
+                                    el-tag(
+                                        :type="scope.row.isRecommend === true ? 'success' : 'danger'",
+                                        disable-transitions
+                                        ) {{scope.row.isRecommend === true? '是':'否'}}
                         el-table-column(prop="sailNum",label="商品销售数量")
                         el-table-column(prop="isOff",label="是否打折")
+                            template(slot-scope="scope")
+                                    el-tag(
+                                        :type="scope.row.isOff === true ? 'success' : 'danger'",
+                                        disable-transitions
+                                        ) {{scope.row.isOff === true? '是':'否'}}
                         el-table-column(prop="percent",label="折扣幅度")
                         el-table-column(prop="material",label="主要材料")
                         el-table-column(prop="tast",label="口味")
@@ -120,24 +140,56 @@ export default {
         }
     },
     methods:{
+        // 添加商品的方法
         addHandle(){
-            console.log(`
-            goodname      商品名           ${this.form.goodname}
-            price         商品单价         ${this.form.price}  
-            num           商品库存数量     ${this.form.num}
-            desc          商品描述         ${this.form.desc}
-            recommend     推荐指数         ${this.form.recommend}
-            isDrink       是否是饮料类     ${this.form.isDrink}
-            isCombo       是否是套餐       ${this.form.isCombo}
-            type          商品类型         ${this.form.type} 
-            isRecommend   是否是推荐菜     ${this.form.isRecommend} 
-            sailNum       商品销售数量     ${this.form.sailNum}
-            isOff         是否打折         ${this.form.isOff}
-            percent       折扣幅度         ${this.form.percent}
-            material      主要材料         ${this.form.material}       
-            tast          口味             ${this.form.tast}        
-            `)
+            // console.log(`
+            // goodname      商品名           ${this.form.goodname}
+            // price         商品单价         ${this.form.price}  
+            // num           商品库存数量     ${this.form.num}
+            // desc          商品描述         ${this.form.desc}
+            // recommend     推荐指数         ${this.form.recommend}
+            // isDrink       是否是饮料类     ${this.form.isDrink}
+            // isCombo       是否是套餐       ${this.form.isCombo}
+            // type          商品类型         ${this.form.type} 
+            // isRecommend   是否是推荐菜     ${this.form.isRecommend} 
+            // sailNum       商品销售数量     ${this.form.sailNum}
+            // isOff         是否打折         ${this.form.isOff}
+            // percent       折扣幅度         ${this.form.percent}
+            // material      主要材料         ${this.form.material}       
+            // tast          口味             ${this.form.tast}        
+            // `)
+            this.Axios({
+                method: 'post',
+                url: '/api/user/addGoods',
+                data: this.form,
+            }).then(data => {
+                console.log(data)
+                this.$refs['Form'].resetFields()
+                this.getList() //更新table数据
+            }).catch(err => {
+                console.log(err)
+            })
+        },
+        // 查询商品列表
+        getList(){
+            this.Axios({
+                method: 'get',
+                url: '/api/user/getGoodsList',
+            }).then(data => {
+                // console.log(data)
+                this.tableData = data.data.data
+            }).catch(err => {
+                console.log(err)
+            })
+        },
+        // 重置表单
+        resetHandle(){
+            console.log('clear')
+            this.$refs['Form'].resetFields()
         }
+    },
+    mounted(){
+        this.getList()
     }
 }
 </script>
