@@ -15,6 +15,12 @@ Vue.use(VueRouter)
         path:'/stockManagement',
         name:'StockManagement',
         component: () => import('../views/StockManagement.vue')
+      },
+      // 商品页
+      {
+        path:'/goods',
+        name:'Goods',
+        component: () => import('../views/Goods.vue')
       }
     ]
   },

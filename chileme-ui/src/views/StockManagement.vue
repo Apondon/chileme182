@@ -21,7 +21,7 @@
                             el-radio(v-model="form.isCombo", label="true") 是
                             el-radio(v-model="form.isCombo", label="false") 否 
                         el-form-item(label="商品类型")
-                            el-radio(v-model="form.type", label="hot") 拿手菜
+                            el-radio(v-model="form.type", label="heat") 拿手菜
                             el-radio(v-model="form.type", label="cool") 下酒菜
                             el-radio(v-model="form.type", label="soup") 汤羹
                             el-radio(v-model="form.type", label="staple") 主食
@@ -70,7 +70,7 @@
                                     :type="scope.row.isCombo === true ? 'success' : 'danger'",
                                     disable-transitions
                                     ) {{scope.row.isCombo === true? '是':'否'}}
-                        el-table-column(prop="type",label="商品类型")
+                        el-table-column(prop="typename",label="商品类型")
                         el-table-column(prop="isRecommend",label="是否是推荐菜")
                             template(slot-scope="scope")
                                     el-tag(
@@ -178,6 +178,9 @@ export default {
             }).then(data => {
                 // console.log(data)
                 this.tableData = data.data.data
+                for(let item of this.tableData){
+                    item.typename = this.transKey(item.type)
+                }
             }).catch(err => {
                 console.log(err)
             })
@@ -186,6 +189,27 @@ export default {
         resetHandle(){
             console.log('clear')
             this.$refs['Form'].resetFields()
+        },
+         transKey(str) {
+            let s = ''
+            switch(str){
+                case 'heat':
+                    s = '拿手菜'
+                    break
+                case 'cool':
+                    s = '下酒菜'
+                    break
+                case 'soup':
+                    s = '汤羹'
+                    break
+                case 'staple':
+                    s = '主食'
+                    break
+                case 'quick':
+                    s = '方便食品'
+                    break              
+            }
+            return s
         }
     },
     mounted(){

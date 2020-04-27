@@ -3,7 +3,7 @@
     el-row
           el-col(:span='1')
               div.gridlt
-                div.menuBtn
+                div.menuBtn(@click="jumpTo('/goods')")
                    span.iconfont &#xe662;
                    i 收银
                 div.menuBtn
