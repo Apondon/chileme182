@@ -111,6 +111,8 @@ const login = async ctx => {
     console.log(res) // 若查不到数据返回null
     if(!!res){ //若该数据存在
         if(data.password == res.password){ // 登录成功
+            console.log(res.mobile)
+            ctx.cookies.set('user',res.mobile)
             ctx.body = {
                 code:200,
                 flag: true,
