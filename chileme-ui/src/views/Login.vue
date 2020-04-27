@@ -46,7 +46,8 @@ export default {
                 data: {
                     username: this.form.username,
                     password: this.form.password,
-                }
+                },
+                // withCredentials:true, // 发送携带证书的请求
             }).then(data =>{
                 console.log(data)
                 if(data.data.flag){ //登陆成功

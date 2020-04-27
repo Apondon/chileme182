@@ -6,7 +6,7 @@ const KoaBody = require('koa-body') //解析post请求
 const router = require('./router/router') // 引入路由(接口)
 // 配置跨域  该部分模块未安装
 // const KoaCors = require('koa-cors') //引入跨域模块
-// app.use(KoaCors())  //配置跨域模块
+// app.use(KoaCors({}))  //配置跨域模块
 
 // 配置数据库链接
 mongoose.connect(cfg.path)
