@@ -77,7 +77,11 @@ export default {
   .menuBtn{
     @include flx;
     flex:1;
+    &:hover{
+      background: rgb(246, 36, 36);
+    }
   }
-  background: orangered;
+  background: rgb(0, 162, 255);
+  color:#fff;
 }
 </style>
