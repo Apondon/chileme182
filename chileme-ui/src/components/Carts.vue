@@ -5,6 +5,7 @@
             el-table-column(prop="num",label="数量")
             el-table-column(prop="price",label="金额")
             el-table-column(prop="methods",label="操作")
+                //- 1.删除 2.修改数量+ -
         el-divider
         p {{`数量 ${cartsTable.length} 金额 ${total}`}}  
         el-button(type='danger') 清空
