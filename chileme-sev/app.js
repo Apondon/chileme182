@@ -8,7 +8,7 @@ const router = require('./router/router') // 引入路由(接口)
 const KoaCors = require('koa-cors') //引入跨域模块
 app.use(KoaCors({
     credentials:true,
-    origin:'http:127.0.0.1:8080'
+    origin:'http://127.0.0.1:8080'
 }))  //配置跨域模块
 
 // 配置数据库链接
