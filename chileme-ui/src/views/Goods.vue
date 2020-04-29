@@ -21,7 +21,12 @@
                     div.splitGoods
                         el-tabs(v-model="menuActiveName")
                             el-tab-pane(v-for='i in sGoods',:key='i.id',:label="i.name",:name="i.code")
-                                div {{i.name}}
+                                div.sGoodsContent
+                                    div.goodsItem
+                                        div.goodsPic 
+                                        div.goodsDes 
+                                            div.goodsDesName {{i.name}}
+                                            div.goodsDesPrice ￥10元
 </template>
 <script>
 import Carts from '@/components/Carts.vue'
@@ -64,6 +69,10 @@ export default {
 </script>
 <style lang="scss" scoped>
 $h:100%;
+@mixin flx($des:column){
+    display:flex;
+    flex-direction:$des ; //row 横向排列 column 纵向排列
+}
 .goods{
     height: $h;
     .el-row,.el-col{
@@ -75,6 +84,7 @@ $h:100%;
         border-right: 1px solid #000;
     }
     .menu{
+        @include flx;
         height: $h;
         background: lightgray;
         .usuallyGoods{
@@ -88,7 +98,7 @@ $h:100%;
                 color:rgb(54, 54, 54);
             }
             .goodsContent{
-                height: 120px;
+                height: 140px;
                 display:flex;
                 padding:15px 40px;
                 // justify-content: space-around;
@@ -106,6 +116,46 @@ $h:100%;
                         color:dodgerblue;
                         margin-left: 4px;
                     }
+                }
+            }
+        }
+        .splitGoods{
+            flex:1;
+            .el-tabs{
+                @include flx;
+                height: $h;
+                .el-tabs__content{
+                    flex:1;
+                }
+            }
+            
+        }
+        .goodsItem{
+            width:200px;
+            height: 80px;
+            padding:3px;
+            box-sizing: border-box;
+            background: #fff;
+            @include flx(row);
+            .goodsPic{
+                width:74px;
+                background: red;
+            }
+            .goodsDes{
+                flex:1;
+                .goodsDesName{
+                    height: 30px;
+                    line-height: 30px;
+                    text-align: left;
+                    text-indent: 5px;
+                    color: red;
+                }
+                .goodsDesPrice{
+                    // height: 40px;
+                    line-height: 40px;
+                    text-align: left;
+                    text-indent: 5px;
+                    color:gray;
                 }
             }
         }
